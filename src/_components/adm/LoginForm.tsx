@@ -2,29 +2,49 @@
 
 import Link from "next/link";
 import InputType from "../common/InputType";
-import { useState } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+import useLogin from "@/_hooks/useLogin";
 
 export default function LoginForm() {
-  const [showPwd, setShowPwd] = useState(false);
+  const {
+    viewPwd,
+    setViewPwd,
+    username,
+    setUsername,
+    password,
+    setPassword,
+    handleSubmit,
+  } = useLogin();
 
   return (
-    <form className="flex flex-col gap-2 w-full">
-      <InputType type="text" placeholder="아이디를 입력해주세요." />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
+      <InputType
+        type="text"
+        placeholder="아이디를 입력해주세요."
+        value={username}
+        onChange={setUsername}
+      />
       <div className="relative">
-        <InputType type={showPwd ? "text" : "password"} />
+        <InputType
+          type={viewPwd ? "text" : "password"}
+          value={password}
+          onChange={setPassword}
+        />
         <div
-          onClick={() => setShowPwd((prev) => !prev)}
+          onClick={() => setViewPwd((prev) => !prev)}
           className="absolute top-1/2 right-2 -translate-y-1/2 text-[#da6319] text-xl cursor-pointer"
         >
-          {showPwd ? <LuEye /> : <LuEyeClosed />}
+          {viewPwd ? <LuEye /> : <LuEyeClosed />}
         </div>
       </div>
       <div className="text-[#aaa] text-sm flex items-center gap-1">
         <input type="checkbox" name="" id="" />
         <label htmlFor="">자동 로그인</label>
       </div>
-      <button className="w-full bg-[#da6319] py-2 mt-2 text-white rounded">
+      <button
+        type="submit"
+        className="w-full bg-[#da6319] py-2 mt-2 text-white rounded"
+      >
         로그인
       </button>
       <ul
