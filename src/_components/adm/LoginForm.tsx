@@ -15,6 +15,8 @@ export default function LoginForm() {
     setPassword,
     handleSubmit,
     rememberId,
+    autoLogin,
+    setAutoLogin,
     setRememberId,
   } = useLogin();
 
@@ -39,16 +41,29 @@ export default function LoginForm() {
           {viewPwd ? <LuEye /> : <LuEyeClosed />}
         </div>
       </div>
-      <div className="text-[#aaa] text-sm flex items-center gap-1">
-        <input
-          type="checkbox"
-          id="save-id"
-          onChange={() => setRememberId((prev) => !prev)}
-          checked={rememberId}
-        />
-        <label htmlFor="save-id" className="text-sm ml-1 text-gray-400">
-          아이디 저장
-        </label>
+      <div className="flex gap-2">
+        <div className="text-[#aaa] text-sm flex items-center gap-1">
+          <input
+            type="checkbox"
+            id="save-id"
+            onChange={() => setRememberId((prev) => !prev)}
+            checked={rememberId}
+          />
+          <label htmlFor="save-id" className="text-sm ml-1 text-gray-400">
+            아이디 저장
+          </label>
+        </div>
+        <div className="text-[#aaa] text-sm flex items-center gap-1">
+          <input
+            type="checkbox"
+            id="save-login"
+            onChange={() => setAutoLogin((prev) => !prev)}
+            checked={autoLogin}
+          />
+          <label htmlFor="save-login" className="text-sm ml-1 text-gray-400">
+            자동 로그인
+          </label>
+        </div>
       </div>
       <button
         type="submit"

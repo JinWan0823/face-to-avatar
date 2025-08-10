@@ -7,6 +7,7 @@ interface UserProps {
   id: string;
   username: string;
   nickname: string;
+  autoLogin: boolean;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -16,6 +17,7 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         username: { label: "아이디", type: "text" },
         password: { label: "비밀번호", type: "password" },
+        autoLogin: { label: "Auto Login", type: "boolean" },
       },
       async authorize(credentials) {
         const db = (await connectDB).db("heroMe");
@@ -35,6 +37,7 @@ export const authOptions: NextAuthOptions = {
           id: user._id.toString(),
           username: user.username,
           nickname: user.nickname,
+          autoLogin: credentials?.autoLogin === "true",
         } as UserProps;
       },
     }),
@@ -44,20 +47,27 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
 
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60, // 자동로그인 30일 유지
-  },
-
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
+        const autoLogin = (user as UserProps).autoLogin;
+        const expiresIn = autoLogin ? 30 * 24 * 60 * 60 : 1 * 60 * 5;
+
         token.user = user;
+        token.expires = Math.floor(Date.now() / 1000) + expiresIn;
       }
+
+      if (trigger === "update" && session?.autoLogin !== undefined) {
+        const expiresIn = session.autoLogin ? 30 * 24 * 60 * 60 : 1 * 60 * 5;
+        token.expires = Math.floor(Date.now() / 1000) + expiresIn;
+      }
+
       return token;
     },
 
     async session({ session, token }) {
       session.user = token.user as UserProps;
+      session.expires = new Date(token.expires * 1000).toISOString();
       return session;
     },
   },
