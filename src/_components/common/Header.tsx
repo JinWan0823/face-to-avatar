@@ -15,12 +15,17 @@ export default function Header() {
     return null;
   }
 
+  const handleModalMenu = () => {
+    setOpenSetting((prev) => !prev);
+    document.getElementById("main-wrapper")?.classList.toggle("modal-open");
+  };
+
   return (
     <>
       <header
-        className="w-full py-1 px-1 absolute top-0
+        className="w-full py-1 px-1 sticky top-0
       flex items-center justify-between 
-      bg-white shadow-lg"
+      bg-white shadow-lg z-99"
       >
         <Link href={"/"} className="w-[120px]">
           <Image
@@ -31,17 +36,11 @@ export default function Header() {
             className="w-full"
           />
         </Link>
-        <button
-          type="button"
-          onClick={() => {
-            setOpenSetting(true);
-            document.documentElement.classList.add("modal-open");
-          }}
-        >
+        <button type="button" onClick={handleModalMenu}>
           <CgMenuRightAlt className="text-[#da6319] text-3xl" />
         </button>
       </header>
-      {openSetting && <SettingMenu setOpenSetting={setOpenSetting} />}
+      {openSetting && <SettingMenu handleModalMenu={handleModalMenu} />}
     </>
   );
 }

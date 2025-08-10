@@ -1,32 +1,30 @@
 import { signOut } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SetStateAction } from "react";
 import { FaDoorOpen, FaHeart } from "react-icons/fa";
 import { RiCloseLargeLine } from "react-icons/ri";
 
 interface SettingMenuProps {
-  setOpenSetting: React.Dispatch<SetStateAction<boolean>>;
+  handleModalMenu: () => void;
 }
 
-export default function SettingMenu({ setOpenSetting }: SettingMenuProps) {
+export default function SettingMenu({ handleModalMenu }: SettingMenuProps) {
   const router = useRouter();
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
-    setOpenSetting(false);
+    handleModalMenu();
     router.push("/login");
   };
 
   const handleMyInfo = () => {
-    setOpenSetting(false);
+    handleModalMenu();
     router.push("/mypage");
   };
 
   return (
     <div
       className="w-full h-full absolute inset-0
-      flex items-center justify-center bg-[#1c1c1cf0]"
+      flex items-center justify-center bg-[#1c1c1cf0] z-999"
     >
       <div className="w-[290px] max-w-[95%] p-2 bg-white rounded-lg overflow-hidden">
         <ul className="w-full bg-gray-100 rounded-lg text-sm font-bold text-[#333]">
@@ -44,7 +42,7 @@ export default function SettingMenu({ setOpenSetting }: SettingMenuProps) {
           </li>
           <li
             className="p-4 cursor-pointer flex items-center gap-2"
-            onClick={() => setOpenSetting(false)}
+            onClick={() => handleModalMenu()}
           >
             <RiCloseLargeLine className="text-[#da6319]" /> 닫기
           </li>

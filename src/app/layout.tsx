@@ -31,8 +31,9 @@ export default function RootLayout({
       >
         <SessionProviderWrapper>
           <main
-            className="w-full max-w-[460px] relative overflow-hidden
-            mx-auto bg-[#fdf2e3] border-l-1 border-r-1 border-[#333]"
+            id="main-wrapper"
+            className="w-full max-w-[460px] max-h-[100vh] relative overflow-hidden overflow-y-auto
+            mx-auto bg-[#fdf2e3] border-l-1 border-r-1 border-[#dfdfdf]"
           >
             <Header />
             {children}
