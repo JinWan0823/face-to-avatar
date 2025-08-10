@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs";
 interface UserProps {
   id: string;
   username: string;
-  name: string;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -34,7 +33,6 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user._id.toString(),
           username: user.username,
-          name: user.name,
         } as UserProps;
       },
     }),
