@@ -5,6 +5,7 @@ declare module "next-auth" {
     id: string;
     username: string;
     nickname: string;
+    autoLogin: boolean;
   }
 
   interface Session {
@@ -12,6 +13,7 @@ declare module "next-auth" {
       id: string;
       username: string;
       nickname: string;
+      autoLogin: boolean;
     };
   }
 }
@@ -22,6 +24,8 @@ declare module "next-auth/jwt" {
       id: string;
       username: string;
       nickname: string;
+      autoLogin: boolean;
     };
+    expires: number;
   }
 }

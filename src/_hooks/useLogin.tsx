@@ -7,6 +7,7 @@ export default function useLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberId, setRememberId] = useState(false);
+  const [autoLogin, setAutoLogin] = useState(false);
 
   const router = useRouter();
 
@@ -26,6 +27,7 @@ export default function useLogin() {
       redirect: false,
       username,
       password,
+      autoLogin,
     });
 
     if (res?.error) {
@@ -50,6 +52,8 @@ export default function useLogin() {
     setPassword,
     handleSubmit,
     rememberId,
+    autoLogin,
+    setAutoLogin,
     setRememberId,
   };
 }
