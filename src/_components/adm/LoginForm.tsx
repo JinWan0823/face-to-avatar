@@ -14,13 +14,15 @@ export default function LoginForm() {
     password,
     setPassword,
     handleSubmit,
+    rememberId,
+    setRememberId,
   } = useLogin();
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
       <InputType
         type="text"
-        placeholder="아이디를 입력해주세요."
+        placeholder={"아이디를 입력해주세요."}
         value={username}
         onChange={setUsername}
       />
@@ -38,8 +40,15 @@ export default function LoginForm() {
         </div>
       </div>
       <div className="text-[#aaa] text-sm flex items-center gap-1">
-        <input type="checkbox" name="" id="" />
-        <label htmlFor="">자동 로그인</label>
+        <input
+          type="checkbox"
+          id="save-id"
+          onChange={() => setRememberId((prev) => !prev)}
+          checked={rememberId}
+        />
+        <label htmlFor="save-id" className="text-sm ml-1 text-gray-400">
+          아이디 저장
+        </label>
       </div>
       <button
         type="submit"
@@ -52,7 +61,7 @@ export default function LoginForm() {
               mt-2 gap-2 text-sm text-[#aaa]"
       >
         <li>
-          <Link href={"/"}>회원가입</Link>
+          <Link href={"/signup"}>회원가입</Link>
         </li>
         |
         <li>

@@ -1,9 +1,7 @@
-import LoginForm from "@/_components/adm/LoginForm";
-import InputType from "@/_components/common/InputType";
-import Image from "next/image";
-import Link from "next/link";
+import { checkUser } from "@/_lib/checkUser";
 
-export default function Home() {
+export default async function Home() {
+  await checkUser();
   return (
     <>
       <main
@@ -13,18 +11,7 @@ export default function Home() {
         <div
           className="inner w-[95%] min-h-[100vh] mx-auto py-10 
           flex flex-col items-center justify-center"
-        >
-          <div className="logo w-full">
-            <Image
-              src={"/main/logo.png"}
-              width={350}
-              height={240}
-              alt="logo"
-              className="w-full"
-            />
-          </div>
-          <LoginForm />
-        </div>
+        ></div>
       </main>
     </>
   );
