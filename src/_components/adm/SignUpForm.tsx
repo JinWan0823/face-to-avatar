@@ -4,10 +4,21 @@ import useSignUp from "@/_hooks/useSignUp";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 export default function SignUpForm() {
-  const { viewPwd, setViewPwd, username, setUsername, password, setPassword } =
-    useSignUp();
+  const {
+    viewPwd,
+    setViewPwd,
+    username,
+    setUsername,
+    password,
+    setPassword,
+    nickname,
+    setNickname,
+    pwdChk,
+    setPwdChk,
+    handleSignUp,
+  } = useSignUp();
   return (
-    <form>
+    <form onSubmit={handleSignUp}>
       <div>
         <p className="text-sm font-bold text-[#aaa]">
           이메일 <span className="text-red-500">*</span>
@@ -26,8 +37,8 @@ export default function SignUpForm() {
         <InputType
           type="text"
           placeholder={"닉네임을 입력해주세요."}
-          value={username}
-          onChange={setUsername}
+          value={nickname}
+          onChange={setNickname}
         />
       </div>
       <div className="mt-2">
@@ -55,8 +66,8 @@ export default function SignUpForm() {
         <div className="relative">
           <InputType
             type={viewPwd ? "text" : "password"}
-            value={password}
-            onChange={setPassword}
+            value={pwdChk}
+            onChange={setPwdChk}
           />
           <div
             onClick={() => setViewPwd((prev) => !prev)}
