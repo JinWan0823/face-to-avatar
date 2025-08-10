@@ -30,7 +30,7 @@
   --font-pretendard: "Pretendard", sans-serif;
 }
 
-html.modal-open body {
+.modal-open {
   @apply overflow-y-hidden;
 }
 
