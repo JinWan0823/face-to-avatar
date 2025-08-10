@@ -8,4 +8,6 @@ export const checkUser = async () => {
   if (!session) {
     redirect("/login");
   }
+
+  console.log(session);
 };

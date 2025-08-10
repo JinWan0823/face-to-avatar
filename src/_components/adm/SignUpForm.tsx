@@ -1,6 +1,7 @@
 "use client";
 import InputType from "@/_components/common/InputType";
 import useSignUp from "@/_hooks/useSignUp";
+import Link from "next/link";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 
 export default function SignUpForm() {
@@ -84,6 +85,12 @@ export default function SignUpForm() {
       >
         회원가입
       </button>
+
+      <div className="flex items-center justify-center mt-4">
+        <Link className="text-sm text-[#aaa]" href={"/login"}>
+          뒤로가기
+        </Link>
+      </div>
     </form>
   );
 }

@@ -1,12 +1,12 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
 import { connectDB } from "@/_lib/mongodb";
 import bcrypt from "bcryptjs";
 
 interface UserProps {
   id: string;
   username: string;
+  nickname: string;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -24,6 +24,7 @@ export const authOptions: NextAuthOptions = {
           .findOne({ username: credentials?.username });
 
         if (!user) return null;
+
         const match = await bcrypt.compare(
           credentials!.password,
           user.password
@@ -33,6 +34,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user._id.toString(),
           username: user.username,
+          nickname: user.nickname,
         } as UserProps;
       },
     }),
@@ -43,17 +45,19 @@ export const authOptions: NextAuthOptions = {
   },
 
   jwt: {
-    maxAge: 30 * 24 * 60 * 60, //자동로그인 30일 유지
+    maxAge: 30 * 24 * 60 * 60, // 자동로그인 30일 유지
   },
 
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.user = user;
+      if (user) {
+        token.user = user;
+      }
       return token;
     },
 
     async session({ session, token }) {
-      session.user = token.user!;
+      session.user = token.user as UserProps;
       return session;
     },
   },
