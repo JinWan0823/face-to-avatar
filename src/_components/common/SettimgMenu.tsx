@@ -25,8 +25,12 @@ export default function SettingMenu({ handleModalMenu }: SettingMenuProps) {
     <div
       className="w-full h-full absolute inset-0
       flex items-center justify-center bg-[#1c1c1cf0] z-999"
+      onClick={handleModalMenu}
     >
-      <div className="w-[290px] max-w-[95%] p-2 bg-white rounded-lg overflow-hidden">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-[290px] max-w-[95%] p-2 bg-white rounded-lg overflow-hidden"
+      >
         <ul className="w-full bg-gray-100 rounded-lg text-sm font-bold text-[#333]">
           <li
             onClick={handleMyInfo}
