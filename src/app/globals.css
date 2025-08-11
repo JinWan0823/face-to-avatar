@@ -43,3 +43,13 @@ body {
 button {
   cursor: pointer;
 }
+
+@keyframes spin {
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.spinner {
+  animation: spin 1s ease-in-out infinite;
+}

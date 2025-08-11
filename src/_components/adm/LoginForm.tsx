@@ -78,14 +78,10 @@ export default function LoginForm() {
         <li>
           <Link href={"/signup"}>회원가입</Link>
         </li>
-        |
-        <li>
-          <Link href={"/"}>아이디 찾기</Link>
-        </li>
-        |
+        {/* |
         <li>
           <Link href={"/"}>비밀번호 찾기</Link>
-        </li>
+        </li> */}
       </ul>
     </form>
   );
