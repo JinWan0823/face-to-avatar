@@ -3,11 +3,14 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import VersionRadio from "./VersionRadio";
+import CropImage from "./CropImage";
+import { FaCropSimple } from "react-icons/fa6";
 
 export default function UploadImage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imgPreview, setImgPreview] = useState("");
   const [selectedVersion, setSelectedVersion] = useState("version-1");
+  const [openCropImg, setCropImg] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -48,20 +51,41 @@ export default function UploadImage() {
     setSelectedVersion("version-1");
   };
 
+  const handleModalMenu = () => {
+    setCropImg((prev) => !prev);
+    document.getElementById("main-wrapper")?.classList.toggle("modal-open");
+  };
+
   return (
     <>
       <div className="img-box relative w-full bg-white rounded shadow-lg">
-        <p
-          className="w-full px-1 bg-gray-100 text-sm text-gray-400
-              flex items-center gap-1"
+        <div
+          className="w-full p-1 bg-gray-100
+          flex itesm-center justify-between"
         >
-          <CiImageOn /> IMG
-        </p>
+          <p
+            className="text-sm text-gray-400
+            flex items-center gap-1"
+          >
+            <CiImageOn /> IMG
+          </p>
+          {imgPreview && (
+            <button
+              onClick={handleModalMenu}
+              className="text-sm px-2 bg-[#da6319] rounded text-white
+            flex items-center gap-1"
+            >
+              <FaCropSimple />
+              Edit
+            </button>
+          )}
+        </div>
         <input
           type="file"
           onChange={handleFileChange}
           id="image-upload"
           className="hidden"
+          accept="image/*"
           ref={fileInputRef}
         />
         <label
@@ -88,6 +112,14 @@ export default function UploadImage() {
           )}
         </label>
       </div>
+
+      {openCropImg && (
+        <CropImage
+          handleModalMenu={handleModalMenu}
+          imgPreview={imgPreview}
+          setImgPreview={setImgPreview}
+        />
+      )}
 
       <VersionRadio
         selectedVersion={selectedVersion}
