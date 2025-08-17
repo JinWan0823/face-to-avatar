@@ -1,7 +1,12 @@
 import { CiImageOn } from "react-icons/ci";
 import LoadingSpinner from "../common/LoadingSpinner";
+import Image from "next/image";
 
-export default function DownloadImage() {
+interface ImgProps {
+  generatePreview: string;
+}
+
+export default function DownloadImage({ generatePreview }: ImgProps) {
   return (
     <>
       <div
@@ -15,7 +20,17 @@ export default function DownloadImage() {
           <CiImageOn /> IMG
         </p>
         <div className="w-full h-[460px] flex items-center justify-center">
-          <LoadingSpinner />
+          {generatePreview ? (
+            <Image
+              src={generatePreview}
+              alt="generate-img"
+              width={1080}
+              height={1940}
+              className="w-full object-fit"
+            />
+          ) : (
+            <LoadingSpinner />
+          )}
         </div>
       </div>
 

@@ -1,21 +1,32 @@
 "use client";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import VersionRadio from "./VersionRadio";
 import CropImage from "./CropImage";
 import { FaCropSimple } from "react-icons/fa6";
 
-export default function UploadImage() {
+interface ImgProps {
+  setGeneratePreview: React.Dispatch<SetStateAction<string>>;
+}
+
+export default function UploadImage({ setGeneratePreview }: ImgProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imgPreview, setImgPreview] = useState("");
+  const [imgFile, setImgFile] = useState<File | null>(null);
+
   const [selectedVersion, setSelectedVersion] = useState("version-1");
   const [openCropImg, setCropImg] = useState(false);
+
+  useEffect(() => {
+    console.log(imgFile);
+  }, [imgFile]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setImgPreview(URL.createObjectURL(file));
+      setImgFile(file);
     }
   };
 
@@ -29,6 +40,7 @@ export default function UploadImage() {
       fileInputRef.current.files = dataTransfer.files;
 
       setImgPreview(URL.createObjectURL(files[0]));
+      setImgFile(files[0]);
     }
   };
 
@@ -49,11 +61,43 @@ export default function UploadImage() {
     }
     setImgPreview("");
     setSelectedVersion("version-1");
+    setImgFile(null);
   };
 
   const handleModalMenu = () => {
     setCropImg((prev) => !prev);
     document.getElementById("main-wrapper")?.classList.toggle("modal-open");
+  };
+
+  const handleSumbit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const prompts: Record<string, string> = {
+      "version-1":
+        "A detailed photo of the uploaded figurine placed inside a display case, surrounded by realistic decorations, soft ambient lighting, realistic textures, 9:16 vertical aspect ratio",
+      "version-2":
+        "Transform the uploaded image into Japanese anime style, vibrant colors, clean cel-shading, dramatic lighting, expressive eyes, fantasy background elements, 9:16 vertical aspect ratio",
+      "version-3":
+        "Turn the uploaded image into a comic superhero/cartoon style, bold outlines, dynamic pose, exaggerated features, bright heroic colors, action background, 9:16 vertical aspect ratio",
+    };
+
+    try {
+      const res = await fetch("/api/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: prompts[selectedVersion] }),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        alert(json.message);
+        return;
+      }
+      setGeneratePreview(json.image);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -118,6 +162,7 @@ export default function UploadImage() {
           handleModalMenu={handleModalMenu}
           imgPreview={imgPreview}
           setImgPreview={setImgPreview}
+          setImgFile={setImgFile}
         />
       )}
 
@@ -133,7 +178,10 @@ export default function UploadImage() {
         >
           초기화
         </button>
-        <button className="flex-1 bg-[#da6319] text-white p-3 rounded">
+        <button
+          onClick={handleSumbit}
+          className="flex-1 bg-[#da6319] text-white p-3 rounded"
+        >
           이미지 생성
         </button>
       </div>

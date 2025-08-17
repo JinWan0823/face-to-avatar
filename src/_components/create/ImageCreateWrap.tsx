@@ -1,11 +1,15 @@
-import DownloadImage from "./DownLoadImage";
+"use client";
+
+import { useState } from "react";
+import DownloadImage from "./DownloadImage";
 import UploadImage from "./UploadImage";
 
 export default function ImageCreateWrap() {
+  const [generatePreview, setGeneratePreview] = useState("");
   return (
     <>
-      <UploadImage />
-      <DownloadImage />
+      <UploadImage setGeneratePreview={setGeneratePreview} />
+      <DownloadImage generatePreview={generatePreview} />
     </>
   );
 }
