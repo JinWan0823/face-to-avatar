@@ -7,12 +7,14 @@ interface SettingMenuProps {
   handleModalMenu: () => void;
   imgPreview: string;
   setImgPreview: React.Dispatch<SetStateAction<string>>;
+  setImgFile: React.Dispatch<SetStateAction<File | null>>;
 }
 
 export default function CropImage({
   handleModalMenu,
   imgPreview,
   setImgPreview,
+  setImgFile,
 }: SettingMenuProps) {
   const [crop, setCrop] = useState<Crop>({
     unit: "%",
@@ -61,10 +63,23 @@ export default function CropImage({
       );
 
       // Blob을 Data URL로 변환
-      const croppedImage = canvas.toDataURL("image/jpeg");
-      setImgPreview(croppedImage);
-      console.log(croppedImage);
-      handleModalMenu();
+      const imageExtension = imgPreview.split(".").pop(); // 파일 확장자 추출
+      const imageType = imageExtension === "png" ? "image/png" : "image/jpeg";
+
+      // Blob 생성 후 File로 변환
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+
+        const fileName = `cropped-image.${
+          imageExtension === "png" ? "png" : "jpg"
+        }`;
+        const croppedFile = new File([blob], fileName, { type: imageType });
+
+        const croppedUrl = URL.createObjectURL(croppedFile);
+        setImgPreview(croppedUrl);
+        setImgFile(croppedFile);
+        handleModalMenu();
+      }, imageType);
     }
   };
 

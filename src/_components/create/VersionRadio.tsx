@@ -35,6 +35,16 @@ export default function VersionRadio({
         />
         <label htmlFor="version-2">Version 2 - 2번 버전으로 하겠습니다. </label>
       </div>
+      <div className="flex items-center gap-1 mt-1">
+        <input
+          type="radio"
+          name="version"
+          id="version-3"
+          checked={selectedVersion === "version-3"}
+          onChange={handleChangeVersion}
+        />
+        <label htmlFor="version-3">Version 3 - 3번 버전으로 하겠습니다. </label>
+      </div>
     </div>
   );
 }
