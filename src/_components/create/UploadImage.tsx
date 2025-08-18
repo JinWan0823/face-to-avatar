@@ -18,6 +18,8 @@ export default function UploadImage({ setGeneratePreview }: ImgProps) {
   const [selectedVersion, setSelectedVersion] = useState("version-1");
   const [openCropImg, setCropImg] = useState(false);
 
+  const [customPrompt, setCustomPrompt] = useState("");
+
   useEffect(() => {
     console.log(imgFile);
   }, [imgFile]);
@@ -82,10 +84,15 @@ export default function UploadImage({ setGeneratePreview }: ImgProps) {
     };
 
     try {
+      const prompt =
+        selectedVersion === "version-4"
+          ? customPrompt
+          : prompts[selectedVersion];
+
       const res = await fetch("/api/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: prompts[selectedVersion] }),
+        body: JSON.stringify({ prompt: prompt }),
       });
 
       const json = await res.json();
@@ -169,6 +176,8 @@ export default function UploadImage({ setGeneratePreview }: ImgProps) {
       <VersionRadio
         selectedVersion={selectedVersion}
         setSelectedVersion={setSelectedVersion}
+        setCustomPrompt={setCustomPrompt}
+        customPrompt={customPrompt}
       />
 
       <div className="mt-2 flex gap-2">
