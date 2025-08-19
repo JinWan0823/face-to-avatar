@@ -5,6 +5,7 @@ import { CiImageOn } from "react-icons/ci";
 import VersionRadio from "./VersionRadio";
 import CropImage from "./CropImage";
 import { FaCropSimple } from "react-icons/fa6";
+import { useAlert } from "@/_context/AlertProvider";
 
 interface ImgProps {
   setGeneratePreview: React.Dispatch<SetStateAction<string>>;
@@ -19,6 +20,8 @@ export default function UploadImage({ setGeneratePreview }: ImgProps) {
   const [openCropImg, setCropImg] = useState(false);
 
   const [customPrompt, setCustomPrompt] = useState("");
+
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     console.log(imgFile);
@@ -98,7 +101,7 @@ export default function UploadImage({ setGeneratePreview }: ImgProps) {
       const json = await res.json();
 
       if (!res.ok) {
-        alert(json.message);
+        showAlert(json.message);
         return;
       }
       setGeneratePreview(json.image);

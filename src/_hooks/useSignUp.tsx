@@ -1,5 +1,6 @@
 "use client";
 
+import { useAlert } from "@/_context/AlertProvider";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -11,6 +12,7 @@ export default function useSignUp() {
   const [pwdChk, setPwdChk] = useState("");
 
   const router = useRouter();
+  const { showAlert } = useAlert();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,12 +20,12 @@ export default function useSignUp() {
 
     try {
       if (!username || !nickname || !password || !pwdChk) {
-        alert("필수 입력사항을 확인하세요.");
+        showAlert("필수 입력사항을 확인하세요.");
         return;
       }
 
       if (password !== pwdChk) {
-        alert("비밀번호를 확인해주세요.");
+        showAlert("비밀번호를 확인해주세요.");
         return;
       }
 
@@ -35,11 +37,11 @@ export default function useSignUp() {
 
       const json = await res.json();
       if (!res.ok) {
-        alert(json.message);
+        showAlert(json.message);
         return;
       }
 
-      alert(json.message);
+      showAlert(json.message);
       router.push("/login");
     } catch (error) {
       console.error("회원가입 실패", error);

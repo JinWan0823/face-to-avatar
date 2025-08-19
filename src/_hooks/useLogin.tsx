@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useAlert } from "@/_context/AlertProvider";
 
 export default function useLogin() {
   const [viewPwd, setViewPwd] = useState(false);
@@ -10,6 +11,7 @@ export default function useLogin() {
   const [autoLogin, setAutoLogin] = useState(false);
 
   const router = useRouter();
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     const savedId = localStorage.getItem("savedId");
@@ -31,14 +33,14 @@ export default function useLogin() {
     });
 
     if (res?.error) {
-      alert("아이디 또는 비밀번호를 확인하세요.");
+      showAlert("아이디 또는 비밀번호를 확인하세요.");
     } else if (res?.ok) {
       if (rememberId) {
         localStorage.setItem("savedId", username);
       } else {
         localStorage.removeItem("savedId");
       }
-      alert("로그인에 성공했습니다.");
+      showAlert("로그인에 성공했습니다.");
       router.push("/");
     }
   };
