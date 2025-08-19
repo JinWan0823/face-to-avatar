@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionProviderWrapper from "./SessionProviderWrapper";
 import Header from "@/_components/common/Header";
+import { AlertProvider } from "@/_context/AlertProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,8 +36,10 @@ export default function RootLayout({
             className="w-full max-w-[460px] max-h-[100vh] relative overflow-hidden overflow-y-auto
             mx-auto bg-[#fdf2e3] border-l-1 border-r-1 border-[#dfdfdf]"
           >
-            <Header />
-            {children}
+            <AlertProvider>
+              <Header />
+              {children}
+            </AlertProvider>
           </main>
         </SessionProviderWrapper>
       </body>

@@ -1,12 +1,20 @@
 import { CiImageOn } from "react-icons/ci";
 import LoadingSpinner from "../common/LoadingSpinner";
 import Image from "next/image";
+import InputType from "../common/InputType";
+import { SetStateAction } from "react";
 
 interface ImgProps {
   generatePreview: string;
+  keywords: string;
+  setKeywords: React.Dispatch<SetStateAction<string>>;
 }
 
-export default function DownloadImage({ generatePreview }: ImgProps) {
+export default function DownloadImage({
+  generatePreview,
+  keywords,
+  setKeywords,
+}: ImgProps) {
   return (
     <>
       <div
@@ -32,6 +40,15 @@ export default function DownloadImage({ generatePreview }: ImgProps) {
             <LoadingSpinner />
           )}
         </div>
+      </div>
+
+      <div className="mt-1 bg-white">
+        <InputType
+          type="text"
+          value={keywords}
+          onChange={setKeywords}
+          placeholder="키워드를 입력해주세요. ex) #OOO"
+        />
       </div>
 
       <button className="w-full p-3 mt-4 bg-[#da6319] rounded text-white">
