@@ -53,3 +53,7 @@ button {
 .spinner {
   animation: spin 1s ease-in-out infinite;
 }
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
