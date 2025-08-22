@@ -9,17 +9,24 @@ import { useAlert } from "@/_context/AlertProvider";
 
 interface ImgProps {
   setGeneratePreview: React.Dispatch<SetStateAction<string>>;
+  setCustomPrompt: React.Dispatch<SetStateAction<string>>;
+  customPrompt: string;
+  selectedVersion: string;
+  setSelectedVersion: React.Dispatch<SetStateAction<string>>;
 }
 
-export default function UploadImage({ setGeneratePreview }: ImgProps) {
+export default function UploadImage({
+  setGeneratePreview,
+  customPrompt,
+  setCustomPrompt,
+  selectedVersion,
+  setSelectedVersion,
+}: ImgProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imgPreview, setImgPreview] = useState("");
   const [imgFile, setImgFile] = useState<File | null>(null);
 
-  const [selectedVersion, setSelectedVersion] = useState("version-1");
   const [openCropImg, setCropImg] = useState(false);
-
-  const [customPrompt, setCustomPrompt] = useState("");
 
   const { showAlert } = useAlert();
 
