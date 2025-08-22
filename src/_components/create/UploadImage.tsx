@@ -9,17 +9,24 @@ import { useAlert } from "@/_context/AlertProvider";
 
 interface ImgProps {
   setGeneratePreview: React.Dispatch<SetStateAction<string>>;
+  setCustomPrompt: React.Dispatch<SetStateAction<string>>;
+  customPrompt: string;
+  selectedVersion: string;
+  setSelectedVersion: React.Dispatch<SetStateAction<string>>;
 }
 
-export default function UploadImage({ setGeneratePreview }: ImgProps) {
+export default function UploadImage({
+  setGeneratePreview,
+  customPrompt,
+  setCustomPrompt,
+  selectedVersion,
+  setSelectedVersion,
+}: ImgProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imgPreview, setImgPreview] = useState("");
   const [imgFile, setImgFile] = useState<File | null>(null);
 
-  const [selectedVersion, setSelectedVersion] = useState("version-1");
   const [openCropImg, setCropImg] = useState(false);
-
-  const [customPrompt, setCustomPrompt] = useState("");
 
   const { showAlert } = useAlert();
 
@@ -81,7 +88,7 @@ export default function UploadImage({ setGeneratePreview }: ImgProps) {
       "version-1":
         "A detailed photo of the uploaded figurine placed inside a display case, surrounded by realistic decorations, soft ambient lighting, realistic textures, 9:16 vertical aspect ratio",
       "version-2":
-        "Transform the uploaded image into Japanese anime style, vibrant colors, clean cel-shading, dramatic lighting, expressive eyes, fantasy background elements, 9:16 vertical aspect ratio",
+        "Transform the uploaded image into Studio Ghibli style, soft painterly textures, warm and natural color palette, whimsical and detailed backgrounds, expressive characters with gentle features, magical and nostalgic atmosphere, 9:16 vertical aspect ratio",
       "version-3":
         "Turn the uploaded image into a comic superhero/cartoon style, bold outlines, dynamic pose, exaggerated features, bright heroic colors, action background, 9:16 vertical aspect ratio",
     };
