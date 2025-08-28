@@ -84,6 +84,16 @@ export default function UploadImage({
   const handleSumbit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (selectedVersion === "version-4" && !customPrompt) {
+      showAlert("프롬프트를 입력해주세요!");
+      return;
+    }
+
+    if (!imgFile) {
+      showAlert("이미지를 업로드해주세요!");
+      return;
+    }
+
     const prompts: Record<string, string> = {
       "version-1":
         "A detailed photo of the uploaded figurine placed inside a display case, surrounded by realistic decorations, soft ambient lighting, realistic textures, 9:16 vertical aspect ratio",
