@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { MdOutlineClose } from "react-icons/md";
 
 interface ViewImgProps {
   img: string;
@@ -23,6 +25,12 @@ export default function ViewImage({
 }: ViewImgProps) {
   return (
     <div className="absolute inset-0 bg-[#000] z-9999">
+      <button
+        onClick={handleCloseImg}
+        className="absolute top-7 right-2 text-4xl text-white z-9999"
+      >
+        <MdOutlineClose />
+      </button>
       <ul className="absolute top-1 w-full flex gap-1 p-2">
         {item.map((_, idx) => (
           <li
@@ -51,20 +59,23 @@ export default function ViewImage({
         <div
           className="w-[50%] h-full"
           onClick={() => {
-            if (chkImgIdx === item.length - 1) return;
+            if (chkImgIdx === item.length - 1) {
+              handleCloseImg();
+              return;
+            }
             handleViewImg(item[chkImgIdx + 1].image, chkImgIdx + 1);
           }}
         ></div>
       </div>
-      <button
+      <Link
+        href={"/"}
         className="absolute left-1/2 bottom-2 -translate-x-1/2
         font-bold text-white p-1 px-4
         bg-[#da6319] border-2 border-point rounded-full
       "
-        onClick={handleCloseImg}
       >
-        CLOSE
-      </button>
+        전체보기
+      </Link>
     </div>
   );
 }
