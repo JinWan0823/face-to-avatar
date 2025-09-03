@@ -30,10 +30,6 @@ export default function UploadImage({
 
   const { showAlert } = useAlert();
 
-  useEffect(() => {
-    console.log(imgFile);
-  }, [imgFile]);
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
