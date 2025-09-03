@@ -6,7 +6,14 @@ import { aiSample } from "../../../ai-data";
 import { useHorizontalScroll } from "@/_hooks/useHorizontalScroll";
 import Image from "next/image";
 import ViewImage from "./ViewImage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+interface CardTypes {
+  username: string;
+  prompt: string;
+  image: string;
+  keywords: string;
+}
 
 export default function MyCharacter() {
   const { data: session } = useSession();
@@ -15,6 +22,7 @@ export default function MyCharacter() {
   const [visibleImg, setVisibleImg] = useState(false);
   const [viewImg, setViewImg] = useState("");
   const [chkImgIdx, setChkImgIdx] = useState(0);
+  const [myCard, setMyCard] = useState<CardTypes[]>([]);
 
   const handleViewImg = (img: string, idx: number) => {
     setVisibleImg(true);
@@ -29,6 +37,12 @@ export default function MyCharacter() {
     setChkImgIdx(0);
     document.getElementById("main-wrapper")?.classList.remove("modal-open");
   };
+
+  // 유저 생성 데이터 조회 추가
+  useEffect(() => {
+    const data = fetch("/api/story");
+    console.log(JSON.stringify(data));
+  }, []);
 
   return (
     <>
@@ -62,7 +76,7 @@ export default function MyCharacter() {
             </Link>
           </li>
 
-          {aiSample.map((item, idx) => (
+          {myCard.map((item, idx) => (
             <li
               key={idx}
               className="relative w-[110px] h-[160px] flex-shrink-0 rounded overflow-hidden cursor-pointer"
