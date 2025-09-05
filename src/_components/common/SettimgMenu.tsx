@@ -1,6 +1,6 @@
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FaDoorOpen, FaHeart } from "react-icons/fa";
+import { FaDoorOpen, FaHeart, FaHome } from "react-icons/fa";
 import { RiCloseLargeLine } from "react-icons/ri";
 
 interface SettingMenuProps {
@@ -18,7 +18,7 @@ export default function SettingMenu({ handleModalMenu }: SettingMenuProps) {
 
   const handleMyInfo = () => {
     handleModalMenu();
-    router.push("/mypage");
+    router.push("/list");
   };
 
   return (
@@ -36,7 +36,14 @@ export default function SettingMenu({ handleModalMenu }: SettingMenuProps) {
             onClick={handleMyInfo}
             className="p-4 border-b-1 border-[#dfdfdf] flex items-center gap-2 cursor-pointer"
           >
-            <FaHeart className="text-[#da6319]" /> 내 정보
+            <FaHome className="text-[#da6319]" /> 메인페이지
+          </li>
+
+          <li
+            onClick={handleMyInfo}
+            className="p-4 border-b-1 border-[#dfdfdf] flex items-center gap-2 cursor-pointer"
+          >
+            <FaHeart className="text-[#da6319]" /> 마이페이지
           </li>
           <li
             onClick={handleLogout}
