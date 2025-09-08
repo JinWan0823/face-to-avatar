@@ -119,3 +119,12 @@ export const aiSample = [
       "Imagine a mystical creature with the ability to communicate with mythical beasts, whispering softly in an enchanted forest filled with fantastical animals and glowing magical plants, surrounded by a dreamy and otherworldly atmosphere, 9:16 vertical aspect ratio.",
   },
 ];
+
+export const prompts: Record<string, string> = {
+  "version-1":
+    "A detailed photo of the uploaded figurine placed inside a display case, surrounded by realistic decorations, soft ambient lighting, realistic textures, 9:16 vertical aspect ratio",
+  "version-2":
+    "Transform the uploaded image into Studio Ghibli style, soft painterly textures, warm and natural color palette, whimsical and detailed backgrounds, expressive characters with gentle features, magical and nostalgic atmosphere, 9:16 vertical aspect ratio",
+  "version-3":
+    "Turn the uploaded image into a comic superhero/cartoon style, bold outlines, dynamic pose, exaggerated features, bright heroic colors, action background, 9:16 vertical aspect ratio",
+};
