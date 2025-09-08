@@ -8,12 +8,14 @@ interface ImgProps {
   generatePreview: string;
   keywords: string;
   setKeywords: React.Dispatch<SetStateAction<string>>;
+  handleSave: () => void;
 }
 
 export default function DownloadImage({
   generatePreview,
   keywords,
   setKeywords,
+  handleSave,
 }: ImgProps) {
   return (
     <>
@@ -51,7 +53,10 @@ export default function DownloadImage({
         />
       </div>
 
-      <button className="w-full p-3 mt-4 bg-[#da6319] rounded text-white">
+      <button
+        onClick={handleSave}
+        className="w-full p-3 mt-4 bg-[#da6319] rounded text-white"
+      >
         저장하기
       </button>
     </>
