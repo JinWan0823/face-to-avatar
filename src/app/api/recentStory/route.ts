@@ -2,7 +2,7 @@ import { connectDB } from "@/_lib/mongodb";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export default async function GET() {
+export async function GET() {
   const session = await getServerSession();
   if (!session || !session.user) {
     return NextResponse.json(
@@ -22,7 +22,6 @@ export default async function GET() {
       .find({
         createdAt: { $gte: threeDays },
       })
-
       .toArray();
 
     return NextResponse.json(data, { status: 200 });
