@@ -1,3 +1,4 @@
+"use client";
 import ImageCreateWrap from "@/_components/create/ImageCreateWrap";
 
 export default function CreatePage() {
