@@ -40,8 +40,8 @@ export default function MyCharacter() {
 
   // 유저 생성 데이터 조회 추가
   useEffect(() => {
-    const data = fetch("/api/story");
-    console.log(JSON.stringify(data));
+    // const data = fetch("/api/recentStory");
+    // console.log(JSON.stringify(data));
   }, []);
 
   return (
