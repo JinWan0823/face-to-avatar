@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         username: { label: "아이디", type: "text" },
         password: { label: "비밀번호", type: "password" },
-        autoLogin: { label: "Auto Login", type: "boolean" },
+        autoLogin: { label: "Auto Login", type: "checkbox" },
       },
       async authorize(credentials) {
         const db = (await connectDB).db("heroMe");

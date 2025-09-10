@@ -7,6 +7,7 @@ import { useHorizontalScroll } from "@/_hooks/useHorizontalScroll";
 import Image from "next/image";
 import ViewImage from "./ViewImage";
 import { useEffect, useState } from "react";
+import { useAlert } from "@/_context/AlertProvider";
 
 interface CardTypes {
   username: string;
@@ -42,6 +43,16 @@ export default function MyCharacter() {
   useEffect(() => {
     // const data = fetch("/api/recentStory");
     // console.log(JSON.stringify(data));
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/recentStory");
+        const data = await res.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
